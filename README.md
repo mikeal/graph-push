@@ -2,6 +2,8 @@
 
 Efficiently push an IPLD graph to a server over websockets.
 
+Only supports `dag-cbor` graph traversal.
+
 Usage:
 
 ```javascript
@@ -42,6 +44,13 @@ let makeTestGraph = async () => {
 ```
 
 ## client(url, rootBlock, get)
+
+`url` is the URL for the websocket server.
+
+`rootBlock` is an instance of `Block` from `ipfs-block` for the root node
+of the tree you want to push.
+
+`get` is an async function that takes a CID instance and returns a buffer.
 
 ## server({options})
 
