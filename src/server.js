@@ -3,6 +3,7 @@ const http = require('http')
 const websocket = require('websocket-stream')
 const znode = require('znode')
 const CID = require('cids')
+const Block = require('ipfs-block')
 
 class GraphPusher {
   constructor (options) {
@@ -43,10 +44,15 @@ class GraphPusher {
   async onStream (stream) {
     let client
     let pullGraph = async (cid, buffer) => {
-      await this.put(new CID(cid), buffer)
-      return this.pullGraph(client, buffer)
+      cid = new CID(cid)
+      let count = await this.pullGraph(await client, buffer)
+      await this.put(cid, buffer)
+      if (this.onDeploy) {
+        this.onDeploy(new Block(buffer, cid), count)
+      }
+      return count
     }
-    client = await znode(stream, {pullGraph})
+    client = znode(stream, {pullGraph})
   }
   onServer (server) {
     let _onStream = (...args) => this.onStream(...args)
