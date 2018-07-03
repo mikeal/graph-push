@@ -9,7 +9,7 @@ const {client, server} = require('graph-push')
 
 let toString = cid => cid.toBaseEncodedString()
 
-/* simple in-memory databsae */
+/* simple in-memory database */
 let db = new Map()
 let get = async cid => {
   return db.get(toString(cid))
@@ -22,8 +22,8 @@ let put = async (cid, buffer) => {
 }
 
 /* test server setup and push */
-let server = server({has, put})
-server.listen(2345, async () => {
+let _server = server({has, put})
+_server.listen(2345, async () => {
   let rootBlock = await getRootBlock()
   let info = await client('ws://localhost:2345', rootBlock, get)
   console.log(info) // {pushed: 123} /* new blocks pushed */
