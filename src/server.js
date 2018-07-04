@@ -47,10 +47,11 @@ class GraphPusher {
       cid = new CID(cid)
       let count = await this.pullGraph(await client, buffer)
       await this.put(cid, buffer)
+      let deploy
       if (this.onDeploy) {
-        this.onDeploy(new Block(buffer, cid), count)
+        deploy = await this.onDeploy(new Block(buffer, cid), count)
       }
-      return count
+      return {deploy, fetched: count}
     }
     client = znode(stream, {pullGraph})
   }

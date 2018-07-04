@@ -51,7 +51,7 @@ gptest('basics: push only root', async (t, url, db) => {
   let buffer = cbor.serialize({})
   let block = asBlock(buffer, 'dag-cbor')
   let ret = await client(url, block, mkopts(map).get)
-  t.same(ret, {pushed: 1})
+  t.same(ret.pushed, 1)
   t.same(db.get(block.cid.toBaseEncodedString()), buffer)
 })
 
@@ -83,5 +83,5 @@ gptest('basics: deep graph', async (t, url, db) => {
   let block = mkblock(root)
   map.set(block.cid.toBaseEncodedString(), block.data)
   let ret = await client(url, block, mkopts(map).get)
-  t.same(ret, {pushed: 501})
+  t.same(ret.pushed, 501)
 })

@@ -12,5 +12,7 @@ module.exports = async (url, block, get) => {
   /* close the websocket client */
   stream.end()
 
-  return {pushed: result + 1}
+  result.pushed = result.fetched + 1
+
+  return result
 }
