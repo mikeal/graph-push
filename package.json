@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "cids": "^0.5.3",
-    "dag-cbor-links": "^1.0.0",
+    "dag-cbor-links": "^1.1.0",
     "websocket-stream": "^5.1.2",
     "znode": "^1.1.3"
   }
